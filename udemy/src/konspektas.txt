@@ -1,0 +1,33 @@
+ * trinary operatorius:
+ int a = 18;
+ boolen c = a < 18 ? "nepilnametis" : "pilnametis";
+-----------------------------------------------------------------------------------------------------------------------
+ * Switch trumpinimas
+ case 1:
+ case 2: case 3: case 4:
+    kai reiksmes vienodos, pavyzdziui kaip ne darbo dienos
+ case 5:
+-----------------------------------------------------------------------------------------------------------------------
+ * Switch su return
+switch(menesis) {
+           case "sausis":
+               return ziema;
+           case "kovas":
+               return pavasaris;
+       }
+       return "vasara arba ruduo";
+
+return switch (menesis) {
+            case "sausis" -> ziema;
+            case "kovas" -> pavasaris;
+            default -> "vasara arba ruduo";
+        };
+ - Jeigu naudojame kodo bloka taireikia prideti {yield bla bla bla;}
+ ----------------------------------------------------------------------------------------------------------------------
+ * parse
+    - naudojam string paversti i int
+    - jeigu double, tai Double.parseDouble
+        int year = 2022;
+        String users = "1999";
+        int date = Integer.parseInt(users);
+        System.out.println("Age = " + (year - date);
