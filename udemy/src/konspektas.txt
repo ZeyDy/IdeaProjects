@@ -31,3 +31,15 @@ return switch (menesis) {
         String users = "1999";
         int date = Integer.parseInt(users);
         System.out.println("Age = " + (year - date);
+ -----------------------------------------------------------------------------------------
+ * seteris su tikrinimu
+    public void setMake(String make) {
+        if(make == null) make = "Unknow";
+        String lowercaseMake = make.toLowerCase();
+        swich(lowercaseMake) {
+            case "holden", "porshe", "tesla" -> this.make = make;
+            default -> {
+            this.make = "unsuported";
+            }
+        }
+    }

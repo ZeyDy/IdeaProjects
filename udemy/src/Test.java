@@ -1,23 +1,16 @@
 import java.util.Scanner;
 
 public class Test {
-    static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
-        int counter = 1;
-        int sum = 0;
-        while (counter <= 5) {
-            System.out.println("Enter number #" + counter + ":");
-            String ivestis = sc.nextLine();
-            try {
-                int number = Integer.parseInt(ivestis);
-                counter++;
-                sum += number;
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid number");
-            }
-        }
-        System.out.println("Sum = " + sum);
+        Wall wall = new Wall(5,4);
+        System.out.println("area= " + wall.getArea());
+
+         wall.setHeight(-1.5);
+         System.out.println("width= " + wall.getWidth());
+         System.out.println("height= " + wall.getHeight());
+         System.out.println("area= " + wall.getArea());
     }
+
 }
 
 
