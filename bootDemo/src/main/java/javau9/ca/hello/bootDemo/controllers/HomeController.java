@@ -20,11 +20,11 @@ public class HomeController {
    public StudentDTO getStudent() {
         return studentService.getStudentDto();
    }
-    @GetMapping("/allS")
+    @GetMapping("/students")
    public List<StudentDTO> getALlStudents () {
         return  studentService.getStudents();
    }
-    @GetMapping("/students/{id}")
+    @GetMapping("/student/{id}")
     public StudentDTO getStudentById(@PathVariable Long id) {
         return studentService.getStudentById(id);
 

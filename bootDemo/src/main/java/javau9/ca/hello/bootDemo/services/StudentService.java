@@ -9,23 +9,28 @@ import java.util.List;
 
 @Service
 public class StudentService {
-    List<StudentDTO> students;
+    private List<StudentDTO> students;
+
+    public StudentService() {
+        this.students = new ArrayList<>();
+        students.add(new StudentDTO("Alice", "Cooper", 1L));
+        students.add(new StudentDTO("Bob", "Smith", 2L));
+    }
 
     public StudentDTO getStudentDto() {
-        return new StudentDTO("Alice","Cooper", null);
+        return new StudentDTO("Alice", "Cooper", 1L);
     }
 
     public List<StudentDTO> getStudents() {
-
-        students.add(new StudentDTO("Alice", "Cooper",1l));
-        students.add(new StudentDTO("Bob", "Smith", null));
         return students;
     }
 
-    public StudentDTO getStudentById(@PathVariable Long id) {
-        return this.students.stream()
-                .filter(student -> student.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+    public StudentDTO getStudentById(Long id) {
+        for (StudentDTO student : students) {
+            if (student.getId().equals(id)) {
+                return student;
+            }
+        }
+        return null;
     }
 }
