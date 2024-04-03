@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Temperature Chart</title>
+  
+</head>
+<body>
+<div>
+  <canvas id="myChart"></canvas>
+</div>
+<script src="node_modules/chart.js/"></script>
+
+<script>
+  fetch('https://cors-anywhere.herokuapp.com/https://api.meteo.lt/v1/stations/panevezio-ams/observations/latest')
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error('Network response was not ok.');
+    })
+    .then(data => {
+      const observations = data.observations;
+      const temperatureData = observations.map(obs => obs.airTemperature);
+      const timestamps = observations.map(obs => new Date(obs.observationTimeUtc).toLocaleString());
+
+      const chartData = {
+        labels: timestamps,
+        datasets: [{
+          label: 'Air Temperature (°C)',
+          data: temperatureData,
+          fill: false,
+          borderColor: 'rgb(75, 192, 192)',
+          tension: 0.1
+        }]
+      };
+
+      const options = {
+        scales: {
+          y: {
+            beginAtZero: false
+          }
+        }
+      };
+
+      new Chart(document.getElementById('myChart').getContext('2d'), {
+        type: 'line',
+        data: chartData,
+        options: options
+      });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+</script>
+</body>
+</html>
