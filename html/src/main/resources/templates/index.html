@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Puslapis</title>
+</head>
+<body>
+<h1>Hello Thymeleaf</h1>
+<p>This is our simple text</p>
+
+<table>
+    <tr>
+        <thead>ID</thead>
+        <thead>irst Name</thead>
+        <thead>LastName</thead>
+    </tr>
+
+    <tr th:each="student: ${students}">
+        <td th:text="${student.id}" />
+        <td th:text="${student.firstName}" />
+        <td th:text="${student.lastName}" />
+    </tr>
+</table>
+
+
+</body>
+</html>

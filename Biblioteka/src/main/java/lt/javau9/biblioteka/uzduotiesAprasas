@@ -1,0 +1,43 @@
+1.Užduotis:
+Sukurti naują Spring Boot projektą Library (JPA, WEB, MySQL).
+
+2.Užduotis
+Susidėti reikiamus nustatytmus į application.properties
+
+3.Užduotis:
+Susidėti dvi klases Library ir Address
+Ir reikiamas anotacijas.
+Galima naudotis žemiau pateiktu pavyzdžiu ir vaizdo įrašu.
+https://www.baeldung.com/spring-data-rest-relationships
+
+4.Užduotis:
+Sukurti HomeController su endpointais
+"home/library" - grąžina naują lib
+"home/address" - grąžina naują address su library
+
+5.Užduotis
+Susikurti Repositorijas (Library ir Address)
+
+6.Užduotis
+Papildyti programą funkcionalumu:
+Gauti bibliotekų sąrašą
+Gauti adresų sąrašą
+Pridėti naują biblioteką
+
+7.Užduotis
+Pridėkite į LibraryRepository metodą
+Library findLibraryByName(String name);
+
+Pridėkite į kontrolerį paieškos pagal vardą endpointą. Čia antraštė.
+@GetMapping("/libraries")public ResponseEntity<Library> getLibraryByName(@RequestParam String name)
+Galima naudoti su užklausa
+"/libraries?name=MyLibraryName"
+
+8.Užduotis
+Papildyti funkcionalumą su Book entičiu išnaudojant One-to-Many ryšį.
+T.y. Library gali turėti daug knygų). Ar knyga žino savo Library, pasirinkite pagal savo sugebėjimus.
+
+9.Užduotis
+Papildyti programą endpointais:
+priima knygos JSON ir Library id ir įrašo į DB.
+Rodo sąrašą knygų pagal Library id.

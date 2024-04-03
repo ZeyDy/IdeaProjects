@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Islaidu sąrašas</title>
+</head>
+<body>
+<h1>Islaidu sąrašas</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Pavadinimas</th>
+        <th>Suma</th>
+        <th>Veiksmai</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="islaidos : ${islaidos}">
+        <td th:text="${islaidos.id}"></td>
+        <td th:text="${islaidos.pavadinimas}"></td>
+        <td th:text="${islaidos.suma}"></td>
+        <td>
+            <a th:href="@{/redaguotiislaidos/{id}(id=${islaidos.id})}">Redaguoti</a>
+            <a th:href="@{/istrintiislaidos/{id}(id=${islaidos.id})}">Ištrinti</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="/sukurtiislaidas">Sukurti islaidas</a>
+<a href="/">I pradzia</a>
+</body>
+</html>

@@ -1,0 +1,35 @@
+body,
+body * {
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+    box-sizing: border-box;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri,'Trebuchet MS', sans-serif;
+
+}
+body{
+    background-image: url(moneyfonas.jpg);
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    background-attachment: fixed;
+}
+.container{
+
+    display: inline-block;
+    width: 100%;
+
+}
+.intro{
+    text-transform: uppercase;
+    font-size: 40px;
+    color: white;
+    width: 100%;
+}
+.row-big{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+

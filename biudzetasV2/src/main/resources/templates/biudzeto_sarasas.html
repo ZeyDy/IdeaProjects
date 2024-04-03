@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biudžeto sąrašas</title>
+</head>
+<body>
+<h1>Biudžeto sąrašas</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Pavadinimas</th>
+        <th>Suma</th>
+        <th>Veiksmai</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="biudzetas : ${biudzetai}">
+        <td th:text="${biudzetas.id}"></td>
+        <td th:text="${biudzetas.pavadinimas}"></td>
+        <td th:text="${biudzetas.suma}"></td>
+        <td>
+            <a th:href="@{/redaguoti/{id}(id=${biudzetas.id})}">Redaguoti</a>
+            <a th:href="@{/istrinti/{id}(id=${biudzetas.id})}">Ištrinti</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="/sukurti">Sukurti biudžetą</a>
+<a href="/">I pradzia</a>
+</body>
+</html>
