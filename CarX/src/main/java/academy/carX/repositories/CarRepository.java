@@ -1,6 +1,7 @@
-package lt.javau9.carx.repositories;
+package academy.carX.repositories;
 
-import lt.javau9.carx.modes.Car;
+
+import academy.carX.modes.Car;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

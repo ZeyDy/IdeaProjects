@@ -1,7 +1,8 @@
-package lt.javau9.carx.mapper;
+package academy.carX.mapper;
 
-import lt.javau9.carx.dto.CarDTO;
-import lt.javau9.carx.modes.Car;
+
+import academy.carX.dto.CarDTO;
+import academy.carX.modes.Car;
 
 public class CarMapper {
     public static CarDTO mapToCarDTO(Car car) {

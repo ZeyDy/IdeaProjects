@@ -1,4 +1,4 @@
-package lt.javau9.carx.exceptions;
+package academy.carX.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
