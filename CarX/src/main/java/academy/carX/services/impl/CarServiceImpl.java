@@ -4,7 +4,7 @@ package academy.carX.services.impl;
 import academy.carX.dto.CarDTO;
 import academy.carX.exceptions.RecourseNotFoundException;
 import academy.carX.mapper.CarMapper;
-import academy.carX.modes.Car;
+import academy.carX.models.Car;
 import academy.carX.repositories.CarRepository;
 import academy.carX.services.CarService;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package academy.carX.modes;
+package academy.carX.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

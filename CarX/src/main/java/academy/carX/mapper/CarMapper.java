@@ -2,7 +2,7 @@ package academy.carX.mapper;
 
 
 import academy.carX.dto.CarDTO;
-import academy.carX.modes.Car;
+import academy.carX.models.Car;
 
 public class CarMapper {
     public static CarDTO mapToCarDTO(Car car) {
