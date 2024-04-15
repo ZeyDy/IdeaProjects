@@ -25,10 +25,10 @@ import javax.crypto.SecretKey;
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    @Value("${javau9.app.jwtSecret}")
+    @Value("${carX.app.jwtSecret}")
     private String jwtSecret;
 
-    @Value("${javau9.app.jwtExpirationMs}")
+    @Value("${carX.app.jwtExpirationMs}")
     private int jwtExpirationMs;
 
 
