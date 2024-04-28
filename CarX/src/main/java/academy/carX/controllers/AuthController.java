@@ -23,14 +23,10 @@ import academy.carX.payload.requests.SignupRequest;
 public class AuthController {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
-
-
     AuthService authService;
-
     public AuthController(AuthService authService) {
         this.authService = authService;
     }
-
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser (@RequestBody LoginRequest loginRequest){
@@ -40,18 +36,12 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignupRequest signUpRequest) {
-
-
         try {
             MessageResponse response = authService.registerUser(signUpRequest);
             return ResponseEntity.ok(response);
         } catch (ResponseStatusException e) {
-
             return ResponseEntity.status(e.getStatusCode())
                     .body(new MessageResponse(e.getReason()));
         }
     }
-
-
-
 }
