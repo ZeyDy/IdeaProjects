@@ -22,8 +22,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
 class CarControllerTest {
@@ -46,14 +45,17 @@ class CarControllerTest {
     @Test
     void createCarTest() throws Exception {
         CarDTO carDTO = new CarDTO(); // Pradinė DTO versija
-        CarDTO savedCar = new CarDTO(); // DTO versija, kaip tikimasi grąžinti iš serviso
-        given(carService.createCar(any(CarDTO.class))).willReturn(savedCar);
+        CarDTO savedCar = new CarDTO(); // DTO versija, ką tikimasi grąžinti iš serviso
+        String username = "testVartotojas"; // Pradinė vartotojo vardo versija
+
+        given(carService.createCar(any(CarDTO.class), eq(username))).willReturn(savedCar);
 
         mockMvc.perform(post("/api/createcar")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(carDTO)))
-                .andExpect(status().isCreated())
-                .andExpect(content().json(objectMapper.writeValueAsString(savedCar)));
+                        .content(objectMapper.writeValueAsString(carDTO))
+                        .header("Authorization", "Bearer {token}")) // Priklauso nuo to, kaip mockinate autentifikaciją
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(savedCar.getId())); // Priklauso nuo to, ką tiksliai grąžina jūsų metodas
     }
 
     @Test

@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface CarService {
 
-    CarDTO createCar(CarDTO carDTO);
+    CarDTO createCar(CarDTO carDTO, String username);
 
     CarDTO getCarById(Long carId);
 
@@ -19,4 +19,5 @@ public interface CarService {
 
     void deleteCar(Long carId);
 
+    List<CarDTO> getCarsByOwner(String username);
 }

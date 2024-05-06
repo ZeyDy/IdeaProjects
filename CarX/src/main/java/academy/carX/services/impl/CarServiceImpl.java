@@ -5,23 +5,33 @@ import academy.carX.dto.CarDTO;
 import academy.carX.exceptions.RecourseNotFoundException;
 import academy.carX.mapper.CarMapper;
 import academy.carX.models.Car;
+import academy.carX.models.UserEntity;
 import academy.carX.repositories.CarRepository;
+import academy.carX.repositories.UserRepository;
 import academy.carX.services.CarService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
 @Service
 public class CarServiceImpl implements CarService {
+    @Autowired
     private CarRepository carRepository;
-    @Override
-    public CarDTO createCar(CarDTO carDTO) {
-        Car car = CarMapper.mapToCar(carDTO);
-        Car savedCar = carRepository.save(car);
-        return CarMapper.mapToCarDTO(savedCar);
-    }
+    @Autowired
+    private UserRepository userRepository;
+//    @Override
+//    public CarDTO createCar(CarDTO carDTO) {
+//        Car car = CarMapper.mapToCar(carDTO);
+//        Car savedCar = carRepository.save(car);
+//        return CarMapper.mapToCarDTO(savedCar);
+//    }
+
 
     @Override
     public CarDTO getCarById(Long carId) {
@@ -61,4 +71,41 @@ public class CarServiceImpl implements CarService {
     public CarServiceImpl(CarRepository carRepository) {
         this.carRepository = carRepository;
     }
+
+    // naujas
+
+    // CarService.java
+    @Override
+    public List<CarDTO> getCarsByOwner(String username) {
+        Optional<UserEntity> userEntity = userRepository.findByUsername(username);
+        if (!userEntity.isPresent()) {
+            return new ArrayList<>();
+        }
+        return carRepository.findByUser(userEntity.get()) // Pakeiskite į teisingą metodą
+                .stream()
+                .map(this::convertToCarDTO)
+                .collect(Collectors.toList());
+    }
+
+    private CarDTO convertToCarDTO(Car car) {
+        CarDTO carDTO = new CarDTO();
+        carDTO.setId(car.getId());
+        carDTO.setMake(car.getMake());
+        carDTO.setModel(car.getModel());
+        carDTO.setPlateNumber(car.getPlateNumber());
+        // ... nustatykite kitus CarDTO laukus ...
+        return carDTO;
+    }
+
+    @Override
+    public CarDTO createCar(CarDTO carDTO, String username) { // Pridėjau username kaip papildomą parametrą
+        Car car = CarMapper.mapToCar(carDTO);
+        UserEntity user = userRepository.findByUsername(username).orElseThrow(
+                () -> new UsernameNotFoundException("Vartotojas nerastas")
+        );
+        car.setUser(user); // Nustatyti vartotoją, kuris sukūrė automobilį
+        Car savedCar = carRepository.save(car);
+        return CarMapper.mapToCarDTO(savedCar);
+    }
+
 }

@@ -1,9 +1,6 @@
 package academy.carX.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,6 +14,10 @@ public class Car {
     private String plateNumber;
     private String make;
     private String model;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id") // Turi sutapti su DB stulpelio pavadinimu.
+    private UserEntity user; // Turi sutapti su 'mappedBy' reikšme `UserEntity`.
 
     public Car() {}
 
