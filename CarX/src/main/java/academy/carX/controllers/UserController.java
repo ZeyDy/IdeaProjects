@@ -20,24 +20,39 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/users")
 public class UserController {
 
-    private final UserService userService;
 
+    private final UserService userService;
+    /**
+     * Constructs a UserController with the specified UserService.
+     * @param userService The service to manage users.
+     */
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
+    /**
+     * Creates a new user with the provided user details.
+     * @param userDto The UserDto containing the user's data.
+     * @return ResponseEntity containing the created UserDto and HTTP status CREATED.
+     */
     @PostMapping("/")
     public ResponseEntity<UserDto>  createUser(@RequestBody UserDto userDto) {
         UserDto createdUser = userService.createUser(userDto);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
-
+    /**
+     * Retrieves all users.
+     * @return ResponseEntity containing a list of UserDto and HTTP status OK.
+     */
     @GetMapping("/")
     public ResponseEntity<List<UserDto>> getAllUsers(){
         List<UserDto> users = userService.getAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
-
+    /**
+     * Retrieves a user by their ID.
+     * @param id The unique identifier of the user.
+     * @return ResponseEntity containing the UserDto if found, otherwise not found status.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable Long id){
         Optional<UserDto> userInBox = userService.getUserById(id);
@@ -45,7 +60,12 @@ public class UserController {
                 .map( ResponseEntity::ok )
                 .orElseGet( () -> ResponseEntity.notFound().build());
     }
-
+    /**
+     * Updates a user by their ID with provided user data.
+     * @param id The unique identifier of the user to update.
+     * @param userDto The UserDto containing the updated data.
+     * @return ResponseEntity containing the updated UserDto if successful, otherwise not found status.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<UserDto> updateUser(
             @PathVariable Long id,
@@ -56,7 +76,11 @@ public class UserController {
                 .map( ResponseEntity::ok )
                 .orElseGet( () -> ResponseEntity.notFound().build());
     }
-
+    /**
+     * Deletes a user by their ID.
+     * @param id The unique identifier of the user to delete.
+     * @return ResponseEntity with HTTP status NO_CONTENT to indicate successful deletion.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id){
         userService.deleteUser(id);
