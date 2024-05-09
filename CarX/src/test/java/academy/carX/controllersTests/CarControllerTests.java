@@ -3,103 +3,99 @@ package academy.carX.controllersTests;
 import academy.carX.controllers.CarController;
 import academy.carX.dto.CarDTO;
 import academy.carX.services.CarService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doNothing;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class CarControllerTest {
-
-    private MockMvc mockMvc;
+public class CarControllerTests {
 
     @Mock
     private CarService carService;
 
+    @Mock
+    private Principal principal;
+
     @InjectMocks
     private CarController carController;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private CarDTO carDTO;
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(carController).build();
+        carDTO = new CarDTO();
+        carDTO.setId(1L);
+        carDTO.setMake("VW");
+        carDTO.setModel("Golf");
+        carDTO.setPlateNumber("XYZ123");
     }
 
     @Test
-    void createCarTest() throws Exception {
-        CarDTO carDTO = new CarDTO(); // Pradinė DTO versija
-        CarDTO savedCar = new CarDTO(); // DTO versija, ką tikimasi grąžinti iš serviso
-        String username = "testVartotojas"; // Pradinė vartotojo vardo versija
+    void testCreateCar() {
+        when(principal.getName()).thenReturn("user");
+        when(carService.createCar(carDTO, "user")).thenReturn(carDTO);
 
-        given(carService.createCar(any(CarDTO.class), eq(username))).willReturn(savedCar);
+        ResponseEntity<CarDTO> response = carController.createCar(carDTO, principal);
 
-        mockMvc.perform(post("/api/createcar")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(carDTO))
-                        .header("Authorization", "Bearer {token}")) // Priklauso nuo to, kaip mockinate autentifikaciją
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(savedCar.getId())); // Priklauso nuo to, ką tiksliai grąžina jūsų metodas
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        assertThat(response.getBody()).isEqualTo(carDTO);
+        verify(carService).createCar(carDTO, "user");
     }
 
     @Test
-    void getCarByIdTest() throws Exception {
-        Long carId = 1L;
-        CarDTO carDTO = new CarDTO();
-        given(carService.getCarById(carId)).willReturn(carDTO);
+    void testGetCarById() {
+        when(carService.getCarById(1L)).thenReturn(carDTO);
 
-        mockMvc.perform(get("/api/{id}", carId))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(carDTO)));
+        ResponseEntity<CarDTO> response = carController.getCarById(1L);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isEqualTo(carDTO);
+        verify(carService).getCarById(1L);
     }
 
     @Test
-    void getAllCarsTest() throws Exception {
-        List<CarDTO> cars = Arrays.asList(new CarDTO(), new CarDTO());
-        given(carService.getAllCars()).willReturn(cars);
+    void testUpdateCar() {
+        when(carService.updateCar(1L, carDTO)).thenReturn(carDTO);
 
-        mockMvc.perform(get("/api/allcars"))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(cars)));
+        ResponseEntity<CarDTO> response = carController.updateCar(1L, carDTO);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isEqualTo(carDTO);
+        verify(carService).updateCar(1L, carDTO);
     }
 
     @Test
-    void updateCarTest() throws Exception {
-        Long carId = 1L;
-        CarDTO updatedCar = new CarDTO(); // Naujos savybės
-        CarDTO carDTO = new CarDTO(); // Kaip tikimasi grąžinti iš serviso
-        given(carService.updateCar(eq(carId), any(CarDTO.class))).willReturn(carDTO);
+    void testDeleteCar() {
+        doNothing().when(carService).deleteCar(1L);
 
-        mockMvc.perform(put("/api/update/{id}", carId)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(updatedCar)))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(carDTO)));
+        ResponseEntity<String> response = carController.deleteCar(1L);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isEqualTo("Car deleted");
+        verify(carService).deleteCar(1L);
     }
 
     @Test
-    void deleteCarTest() throws Exception {
-        Long carId = 1L;
-        doNothing().when(carService).deleteCar(carId);
+    void testGetMyCars() {
+        when(principal.getName()).thenReturn("user");
+        when(carService.getCarsByOwner("user")).thenReturn(Arrays.asList(carDTO));
 
-        mockMvc.perform(delete("/api/delete/{id}", carId))
-                .andExpect(status().isOk())
-                .andExpect(content().string("Car deleted"));
+        ResponseEntity<List<CarDTO>> response = carController.getMyCars(principal);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).containsExactly(carDTO);
+        verify(carService).getCarsByOwner("user");
     }
 }

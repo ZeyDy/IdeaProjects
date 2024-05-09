@@ -25,13 +25,10 @@ public class CarServiceImpl implements CarService {
     private CarRepository carRepository;
     @Autowired
     private UserRepository userRepository;
-//    @Override
-//    public CarDTO createCar(CarDTO carDTO) {
-//        Car car = CarMapper.mapToCar(carDTO);
-//        Car savedCar = carRepository.save(car);
-//        return CarMapper.mapToCarDTO(savedCar);
-//    }
 
+    public CarServiceImpl(CarRepository carRepository) {
+        this.carRepository = carRepository;
+    }
 
     @Override
     public CarDTO getCarById(Long carId) {
@@ -68,20 +65,15 @@ public class CarServiceImpl implements CarService {
 
     }
 
-    public CarServiceImpl(CarRepository carRepository) {
-        this.carRepository = carRepository;
-    }
 
-    // naujas
 
-    // CarService.java
     @Override
     public List<CarDTO> getCarsByOwner(String username) {
         Optional<UserEntity> userEntity = userRepository.findByUsername(username);
         if (!userEntity.isPresent()) {
             return new ArrayList<>();
         }
-        return carRepository.findByUser(userEntity.get()) // Pakeiskite į teisingą metodą
+        return carRepository.findByUser(userEntity.get())
                 .stream()
                 .map(this::convertToCarDTO)
                 .collect(Collectors.toList());
@@ -93,17 +85,16 @@ public class CarServiceImpl implements CarService {
         carDTO.setMake(car.getMake());
         carDTO.setModel(car.getModel());
         carDTO.setPlateNumber(car.getPlateNumber());
-        // ... nustatykite kitus CarDTO laukus ...
         return carDTO;
     }
 
     @Override
-    public CarDTO createCar(CarDTO carDTO, String username) { // Pridėjau username kaip papildomą parametrą
+    public CarDTO createCar(CarDTO carDTO, String username) {
         Car car = CarMapper.mapToCar(carDTO);
         UserEntity user = userRepository.findByUsername(username).orElseThrow(
-                () -> new UsernameNotFoundException("Vartotojas nerastas")
+                () -> new UsernameNotFoundException("User is not exists")
         );
-        car.setUser(user); // Nustatyti vartotoją, kuris sukūrė automobilį
+        car.setUser(user);
         Car savedCar = carRepository.save(car);
         return CarMapper.mapToCarDTO(savedCar);
     }
