@@ -23,12 +23,15 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## 🛠 Manual Testing: Login & Register
 
-| **Test Scenario**         | **Test Case**                              | **Pre-Condition**               | **Input**                                                                                         | **Test Steps**                                               | **Expected Result**                                | **Actual Result** |
-|--------------------------|------------------------------------------|--------------------------------|-------------------------------------------------------------------------------------------------|-----------------------------------------------------------|--------------------------------------------------|------------------|
-| **User Registration**    | Register with valid details              | User must not be registered    | **Username:** testdoctor <br> **Email:** testdoctor@example.com <br> **First name:** John <br> **Last name:** Doe <br> **Password:** securePassword123 | 1. Navigate to registration page  <br> 2. Enter valid details <br> 3. Click "Register" <br> 4. Verify success message <br> 5. Login with registered credentials | User successfully registers and can log in. | **Registration successful** |
-|                          | Register with existing username          | Username already used          | **Username:** testdoctor <br> **Email:** newdoctor@example.com <br> **First name:** Mike <br> **Last name:** Smith <br> **Password:** anotherPassword123 | 1. Navigate to registration page <br> 2. Enter an already registered username <br> 3. Click "Register" | System displays an error: "Username already in use!" | **Failed to register: Request failed with status code 409** |
-| **User Login**           | Login with valid details                 | User must be registered        | **Username:** testdoctor <br> **Password:** securePassword123 | 1. Enter correct details <br> 2. Click "Login" | User successfully logs in. | **Logged in successfully** |
-|                          | Login with incorrect password            | User must be registered        | **Username:** testdoctor <br> **Password:** wrongPassword | 1. Enter wrong password <br> 2. Click "Login" | System displays an error: "Invalid Credentials" | **Failed to login: Bad credentials** |
+## 🛠 Manual Testing: Login & Register
+
+| **Scenario**       | **Test Case**                  | **Pre-Condition**        | **Input**                             | **Steps**                                      | **Expected Result**                          | **Actual Result** |
+|--------------------|--------------------------------|-------------------------|-------------------------------------|------------------------------------------------|----------------------------------------------|------------------|
+| **Registration**  | Register with valid details    | Username must be unique | **Username:** testdoctor <br> **Password:** securePassword123 | 1. Go to registration page <br> 2. Enter details <br> 3. Click "Register" <br> 4. Verify success message <br> 5. Try logging in | Successfully registers and can log in. | **Registration successful** |
+|                   | Register with existing username | Username already taken  | **Username:** testdoctor <br> **Password:** anotherPassword123 | 1. Go to registration page <br> 2. Enter existing username <br> 3. Click "Register" | Error: "Username already in use!" | **Failed to register: Status 409** |
+| **Login**         | Login with valid details      | User must be registered | **Username:** testdoctor <br> **Password:** securePassword123 | 1. Enter correct username and password <br> 2. Click "Login" | Successfully logs in. | **Logged in successfully** |
+|                   | Login with incorrect password | User must be registered | **Username:** testdoctor <br> **Password:** wrongPassword | 1. Enter wrong password <br> 2. Click "Login" | Error: "Invalid Credentials" | **Failed to login: Bad credentials** |
+
 
 
 
