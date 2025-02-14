@@ -15,16 +15,14 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## **🛠️ Manual Tests for Login & Register**
 
-| **Test Scenario**          | **Test Case**                                 | **Pre-Condition**                 | **Test Steps**                                              | **Expected Result**                                      |
-|----------------------------|---------------------------------------------|----------------------------------|------------------------------------------------------------|----------------------------------------------------------|
-| **User Registration**      | Register with valid credentials            | User must not be registered      | 1. Navigate to registration page  <br> 2. Enter valid username, email, and password <br> 3. Click "Register" <br> 4. Verify success message <br> 5. Login with registered credentials | User successfully registers and can log in. |
-|                            | Register with existing email               | User email already registered   | 1. Navigate to registration page <br> 2. Enter an already registered email <br> 3. Click "Register" | System should display an error. |
-|                            | Register with invalid email format         | None                             | 1. Navigate to registration page <br> 2. Enter an invalid email format <br> 3. Click "Register" | System should reject the input. |
-|                            | Register with weak password                | None                             | 1. Navigate to registration page <br> 2. Enter weak password (e.g., "1234") <br> 3. Click "Register" | System should prompt for a stronger password. |
-| **User Login**             | Login with valid credentials               | User must already be registered  | 1. Navigate to login page <br> 2. Enter correct username and password <br> 3. Click "Login" | User successfully logs in and is redirected to dashboard. |
-|                            | Login with incorrect password              | User must already be registered  | 1. Navigate to login page <br> 2. Enter incorrect password <br> 3. Click "Login" | System should show an "Invalid Credentials" message. |
-|                            | Login with unregistered user               | None                             | 1. Navigate to login page <br> 2. Enter an unregistered email/username <br> 3. Click "Login" | System should not allow access. |
-|                            | Login with empty username or password      | None                             | 1. Navigate to login page <br> 2. Leave username or password empty <br> 3. Click "Login" | System should prevent submission. |
+## 🛠 Manual Testing: Login & Register
+
+| **Test Scenario**         | **Test Case**                              | **Pre-Condition**               | **Input**                                  | **Test Steps**                                               | **Expected Result**                                | **Actual Result** |
+|--------------------------|------------------------------------------|--------------------------------|--------------------------------|-----------------------------------------------------------|--------------------------------------------------|------------------|
+| **User Registration**    | Register with valid details              | User must not be registered    | Valid username, email, password | 1. Navigate to registration page  <br> 2. Enter valid details <br> 3. Click "Register" <br> 4. Verify success message <br> 5. Login with registered credentials | User successfully registers and can log in. | |
+|                          | Register with existing email             | Email already used             | Existing email, new password | 1. Navigate to registration page <br> 2. Enter an already registered email <br> 3. Click "Register" | System displays an error: "Email already in use!" | |
+| **User Login**           | Login with valid details                 | User must be registered        | Correct username and password | 1. Enter correct details <br> 2. Click "Login" | User successfully logs in. | |
+|                          | Login with incorrect password            | User must be registered        | Correct username, wrong password | 1. Enter wrong password <br> 2. Click "Login" | System displays an error: "Invalid Credentials" | |
 
 ---
 
