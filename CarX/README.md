@@ -19,9 +19,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 | **Test Scenario**         | **Test Case**                              | **Pre-Condition**               | **Input**                                  | **Test Steps**                                               | **Expected Result**                                | **Actual Result** |
 |--------------------------|------------------------------------------|--------------------------------|--------------------------------|-----------------------------------------------------------|--------------------------------------------------|------------------|
-| **User Registration**    | Register with valid details              | User must not be registered    | "username": "testdoctor",
-    "email": "testdoctor@example.com",
-    "firstname": "John",
+| **User Registration**    | Register with valid details              | User must not be registered    | username: testdoctor, email: testdoctor@example.com,firstname": "John",
     "lastname": "Doe",
     "password": "securePassword123" | 1. Navigate to registration page  <br> 2. Enter valid details <br> 3. Click "Register" <br> 4. Verify success message <br> 5. Login with registered credentials | User successfully registers and can log in. | |
 |            Registration successful              | Register with existing email             | Email already used             | Existing email, new password | 1. Navigate to registration page <br> 2. Enter an already registered email <br> 3. Click "Register" | System displays an error: "Email already in use!" |Failed to register: Request failed with status code 409 |
